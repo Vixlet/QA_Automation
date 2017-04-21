@@ -11,5 +11,13 @@ public class VixletTest extends AppiumTest {
     public void appLoads() {
         VixletWelcomePage welcomePage = new VixletWelcomePage(driver, platform).waitUntilLoaded();
     }
+	
+	@Category({SignUp.class, Android_only.class}) 
+    @Test
+    public void getStarted() {
+        VixletWelcomePage wp = new VixletWelcomePage(driver, platform).waitUntilLoaded();
+        wp.getStarted();
+    }
+
 
 }
