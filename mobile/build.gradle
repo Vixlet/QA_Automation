@@ -1,0 +1,45 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+//    compile 'io.appium:java-client:3.1.0'
+    compile 'io.appium:java-client:4.1.2'
+    compile group: 'commons-io', name: 'commons-io', version: '2.0.1'
+    compile group: 'com.googlecode.json-simple', name: 'json-simple', version:'1.1.1'
+}
+
+
+test {
+	useJUnit {
+        systemProperties System.properties
+        if( System.getProperty("platform").equals("ios") ) {
+			excludeCategories 'Android_only'
+            if( null != System.getProperty("group") ) {
+               if( System.getProperty("group").equals("smoke") ) {
+                   includeCategories 'Smoke'
+               } else if(System.getProperty("group").equals("signup")) {
+                 includeCategories 'SignUp'
+               }
+            } else {
+                includeCategories 'Smoke','SignUp'
+            }
+        } else {
+            excludeCategories 'IOS_only'
+            if( null != System.getProperty("group") ) {
+               if( System.getProperty("group").equals("smoke") ) {
+                   includeCategories 'Smoke'
+               } else if(System.getProperty("group").equals("signup")) {
+                 includeCategories 'SignUp'
+               }
+            } else {
+                 excludeCategories 'Smoke'
+            }
+        }
+    }
+}
