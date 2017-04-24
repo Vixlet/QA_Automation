@@ -37,7 +37,7 @@ public class VixletWelcomePage extends Vixlet<VixletWelcomePage> {
         setIdentifier(Platform.ANDROID, "SIGN_IN_BY", SIGN_IN_ID_BY);
         setIdentifier(Platform.IOS, "GET_STARTED_BY", GET_STARTED_BY);
         setIdentifier(Platform.IOS, "SIGN_IN_BY", SIGN_IN_BY);
-        println("Coming into VixletWelcomePage.");
+        println("Coming into Vixlet Welcome Page.");
     }
 
     public VixletWelcomePage waitUntilLoaded() {

@@ -56,4 +56,26 @@ public abstract class Vixlet<T extends Vixlet<?>> {
         System.out.printf("\t%-80s:: in %-26s, by method %s()\n", line, this.getClass().getName(), ste[2].getMethodName()); 
     }
     
+    void dismissAndroidPopUp(int duration, By popUp, By dismissBtn, String logMsg) {
+        if ( ((String) driver.getCapabilities().getCapability("platformName")).equals("Android") ) {
+    		pause(duration);
+        	for (int i=0; i<3; i++) {
+        		if (driver.findElements( popUp ).size() > 0) {
+                    println("Android: " + logMsg);
+                    driverWait.until(ExpectedConditions.visibilityOfElementLocated(dismissBtn)).click();
+            		pause(3);
+        		}
+        	}
+        }
+    }
+    
+    void pressKeyByAdbShell(String whatIsTheKey, String keyMap) {
+    	println("Android: send key " + whatIsTheKey + " through adb shell");
+    	try {
+    		Runtime.getRuntime().exec("/Applications/android-sdk-macosx/platform-tools/adb shell input keyevent " + keyMap);
+    		pause(2);
+    	} catch (IOException e) {
+            e.printStackTrace();
+   	    }
+    }
 }
