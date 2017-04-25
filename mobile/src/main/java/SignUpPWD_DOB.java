@@ -22,26 +22,39 @@ public class SignUpPWD_DOB extends Vixlet<SignUpPWD_DOB> {
     private static final By SIGUP_BTN_BY = By.id("com.vixlet.atp.debug:id/email_next_button");
     private static final By ARROW_NEXT_BY = By.id("com.vixlet.atp.debug:id/right_arrow");
     private static final String DOB_DAY[][] = { {"DELETE", "67"}, {"DELETE", "67"}, {"1", "8"}, {"4", "11"}, {"ENTER", "66"} }; 
-    private static final String[][] DOB_MON = { {"DELETE", "67"}, {"DELETE", "67"}, {"DELETE", "67"}, {"J", "38"}, {"u", "49"}, {"n", "42"}, {"ENTER", "66"} }; 
-    private static final String[][] DOB_YR = { {"DELETE", "67"}, {"1", "8"},{"9", "16"}, {"8", "15"}, {"6", "13"}, {"ENTER", "66"} };
+    private static final String[][] DOB_MON = { {"DELETE", "67"}, {"DELETE", "67"}, {"DELETE", "67"}, {"J", "38"}, {"u", "49"}, {"n", "42"}, {"ENTER", "66"} };
+    private static final String[][] DOB_MO2 = { {"DELETE", "67"}, {"DELETE", "67"}, {"DELETE", "67"}, {"S", "47"}, {"e", "33"}, {"p", "44"}, {"ENTER", "66"} }; 
+    private static final String[][] DOB_YR = { {"DELETE", "67"}, {"1", "8"},{"9", "16"}, {"8", "15"}, {"5", "12"}, {"ENTER", "66"} };
+    private static final String[][] DOB_YR2 = { {"DELETE", "67"}, {"2", "9"},{"0", "7"}, {"1", "8"}, {"6", "13"}, {"ENTER", "66"} };
     private static final TreeMap<String, String[][]> hm = new TreeMap<String, String[][]>() {{
         put("DOB_YEAR_BY",  DOB_YR);
         put("DOB_MONTH_BY", DOB_MON);
         put("DOB_DAY_BY",   DOB_DAY);
+    }};
+    private static final TreeMap<String, String[][]> hm2 = new TreeMap<String, String[][]>() {{
+        put("DOB_YEAR_BY",  DOB_YR2);
+        put("DOB_DAY_BY",   DOB_DAY);
+        put("DOB_MONTH_BY", DOB_MO2);
     }};
     private static final By DOB_TITLE_BY = By.id("android:id/alertTitle");
     private static final By DOB_TITLE_DIVIDER_BY = By.id("android:id/titleDivider");
     private static final String base = 
     		"//android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.DatePicker[1]/";
     private static final String dobXp = base + "android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/android.widget.NumberPicker[";
-    private static final By DOB_DAY_BY = By.xpath(dobXp + "1]"); 
-    private static final By DOB_MONTH_BY = By.xpath(dobXp + "2]"); 
+    private static final By DOB_MONTH_BY = By.xpath(dobXp + "1]"); 
+    private static final By DOB_DAY_BY = By.xpath(dobXp + "2]"); 
     private static final By DOB_YEAR_BY = By.xpath(dobXp + "3]");
     private static final By DOB_BTN_PANEL_BY = By.id("android:id/buttonPanel");
 	private static final By DOB_OK_BY = By.id("android:id/button1");
 	private static final By DOB_CANCEL_BY = By.id("android:id/button2");
 	private static final By NAVIGATE_BACK_BY = By.id("Navigate up");
-
+	private static final By NEED_DOB_PROMPT_BY = By.id("com.vixlet.atp.debug:id/birthday_validation");
+	private static final By NEED_PWD_PROMPT_BY = By.id("com.vixlet.atp.debug:id/password_validation");
+	private static final By MINOR_NOT_QUALIFY_PANEL_BY = By.id("android:id/contentPanel");
+	private static final By MINOR_NOT_QUALIFY_MSG_BY = By.id("android:id/message");
+	private static final By MINOR_NOT_QUALIFY_OK_BY = By.id("android:id/buttonPanel");
+	
+	
     public SignUpPWD_DOB(AppiumDriver webDriver, Platform platform) {
         super(webDriver, platform);
         setIdentifier(Platform.ANDROID, "BACK_BY", BACK_BY);
@@ -62,6 +75,11 @@ public class SignUpPWD_DOB extends Vixlet<SignUpPWD_DOB> {
         setIdentifier(Platform.ANDROID, "DOB_CANCEL_BY", DOB_CANCEL_BY);
         setIdentifier(Platform.ANDROID, "DOB_OK_BY", DOB_OK_BY);
         setIdentifier(Platform.ANDROID, "NAVIGATE_BACK_BY", NAVIGATE_BACK_BY);
+        setIdentifier(Platform.ANDROID, "NEED_DOB_PROMPT_BY", NEED_DOB_PROMPT_BY);
+        setIdentifier(Platform.ANDROID, "NEED_PWD_PROMPT_BY", NEED_PWD_PROMPT_BY);
+        setIdentifier(Platform.ANDROID, "MINOR_NOT_QUALIFY_PANEL_BY", MINOR_NOT_QUALIFY_PANEL_BY);
+        setIdentifier(Platform.ANDROID, "MINOR_NOT_QUALIFY_BY", MINOR_NOT_QUALIFY_MSG_BY);
+        setIdentifier(Platform.ANDROID, "MINOR_NOT_QUALIFY_OK_BY", MINOR_NOT_QUALIFY_OK_BY);
         setIdentifier(Platform.IOS, "ARROW_NEXT_BY", ARROW_NEXT_BY);
         println("Coming into SignUp PWD & DOB info page.");
     }
@@ -75,6 +93,8 @@ public class SignUpPWD_DOB extends Vixlet<SignUpPWD_DOB> {
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("PWD_VISIBLE_HIDE_BY")));
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("DOB_FIELD_BY")));
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("TERM_PRIVACY_BY")));
+        driverWait.until(ExpectedConditions.invisibilityOfElementLocated(getIdentifier("NEED_DOB_PROMPT_BY")));
+        driverWait.until(ExpectedConditions.invisibilityOfElementLocated(getIdentifier("NEED_PWD_PROMPT_BY")));
         if ( ((String) driver.getCapabilities().getCapability("platformName")).equals("Android") ) {
         	driver.hideKeyboard();
         }
@@ -91,6 +111,13 @@ public class SignUpPWD_DOB extends Vixlet<SignUpPWD_DOB> {
         return this;
     }
     
+    SignUpPWD_DOB fillSignUpPWDOnly() {
+    	fillSignUpPWD();
+    	driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("SIGUP_BTN_BY"))).click();
+        driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("NEED_DOB_PROMPT_BY")));
+        return this;
+    }
+    
     void showHidePWD() {
     	for(int i=0; i<2; i++) {
         	driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("PWD_VISIBLE_HIDE_BY"))).click();
@@ -98,9 +125,34 @@ public class SignUpPWD_DOB extends Vixlet<SignUpPWD_DOB> {
     	}
     }
     
+    SignUpPWD_DOB setDOBOnly() {
+    	setDOB2();
+        driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("NEED_PWD_PROMPT_BY")));
+        return this;
+    }
+    
+    SignUpPWD_DOB setDOBJunior() {
+    	setDOB2();
+        driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("MINOR_NOT_QUALIFY_PANEL_BY")));
+        driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("MINOR_NOT_QUALIFY_BY")));
+        driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("MINOR_NOT_QUALIFY_OK_BY")));
+        return this;
+    }
+    
+    void setDOB2() {
+    	println("Set User's DOB: Sept/14/2016");
+    	driver.findElement(getIdentifier("DOB_FIELD_BY")).click();
+        setDOBandroid(hm2);
+        driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("SIGUP_BTN_BY"))).click();
+    }
+    
     SignUpPWD_DOB setDOB() {
-    	println("Set User's DOB: Jun/14/1986");
-    	driver.findElement(getIdentifier("DOB_FIELD_BY")).click();   pause(1);
+    	println("Set User's DOB: Jun/14/1985");
+        return setDOB(hm);
+    }
+    
+    SignUpPWD_DOB setDOB(TreeMap<String, String[][]> dob) {
+    	driver.findElement(getIdentifier("DOB_FIELD_BY")).click();
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("DOB_TITLE_BY")));
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("DOB_TITLE_DIVIDER_BY")));
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("DOB_DAY_BY")));
@@ -110,16 +162,16 @@ public class SignUpPWD_DOB extends Vixlet<SignUpPWD_DOB> {
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("DOB_CANCEL_BY")));
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("DOB_OK_BY")));
         if ( ((String) driver.getCapabilities().getCapability("platformName")).equals("Android") ) {
-        	setDOBandroid();
+        	setDOBandroid(dob);	
         }
         return this;
     }
     
-    void setDOBandroid() {
+    void setDOBandroid(TreeMap<String, String[][]> dOB) {
 //        driver.scrollTo("Sep");
-        for (String s : hm.descendingKeySet() ) {
-        	pause(2);
-            spinWheelValues(s, hm.get(s));
+        for (String s : dOB.keySet() ) {
+//        	pause(2);
+            spinWheelValues(s, dOB.get(s));
         }
         dismissAndroidPopUp(2, getIdentifier("DOB_CANCEL_BY"), getIdentifier("DOB_OK_BY"), "Set Date of Birth");
     }
@@ -145,7 +197,7 @@ public class SignUpPWD_DOB extends Vixlet<SignUpPWD_DOB> {
     		androidScrollDown();
     	}
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("NAVIGATE_BACK_BY"))).click();
-    	pause(6);
+    	pause(2);
     }
     
     void androidScrollDown() {
@@ -155,7 +207,7 @@ public class SignUpPWD_DOB extends Vixlet<SignUpPWD_DOB> {
         }
     }
     
-    SignUpExpressYourself singUp() {
+    SignUpExpressYourself signUp() {
     	driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("SIGUP_BTN_BY"))).click();
         return new SignUpExpressYourself(driver, platform).waitUntilLoaded();
     }

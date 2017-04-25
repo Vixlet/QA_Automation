@@ -18,6 +18,13 @@ public class SignUpEmailPage extends Vixlet<SignUpEmailPage> {
     private static final By USER_NAME_FIELD_BY = By.id("com.vixlet.atp.debug:id/username_edit");
     private static final By NEXT_BTN_BY = By.id("com.vixlet.atp.debug:id/email_next_button");
     private static final By ARROW_NEXT_BY = By.id("com.vixlet.atp.debug:id/right_arrow");
+    private static final By INVALID_EMAIL_BY = By.id("com.vixlet.atp.debug:id/username_validation");
+    private static final By BACK_TN_BY = By.id("headerButtonBack");
+    private static final By ENTER_EMAIL_HEADER_BY = By.id("Enter email to get started");
+    private static final By EMAIL_BY = By.id("Email");
+    private static final By USERNAME_FIELD_BY = By.id("emailTextField");
+    private static final By NEXT_BY = By.id("nextPage");
+    private static final By INVALID_EMAIL_ERROR_BY = By.id("Invalid Email");
 
     
     public SignUpEmailPage(AppiumDriver webDriver, Platform platform) {
@@ -28,7 +35,13 @@ public class SignUpEmailPage extends Vixlet<SignUpEmailPage> {
         setIdentifier(Platform.ANDROID, "USER_NAME_FIELD_BY", USER_NAME_FIELD_BY);
         setIdentifier(Platform.ANDROID, "NEXT_BTN_BY", NEXT_BTN_BY);
         setIdentifier(Platform.ANDROID, "ARROW_NEXT_BY", ARROW_NEXT_BY);
-        setIdentifier(Platform.IOS, "ARROW_NEXT_BY", ARROW_NEXT_BY);
+        setIdentifier(Platform.ANDROID, "INVALID_EMAIL_BY", INVALID_EMAIL_BY);
+        setIdentifier(Platform.IOS, "BACK_BY", BACK_TN_BY);
+        setIdentifier(Platform.IOS, "ENTER_EMAIL_PROMPT_BY", ENTER_EMAIL_HEADER_BY);
+        setIdentifier(Platform.IOS, "EMAIL_BY", EMAIL_BY);
+        setIdentifier(Platform.IOS, "USER_NAME_FIELD_BY", USERNAME_FIELD_BY);
+        setIdentifier(Platform.IOS, "NEXT_BTN_BY", NEXT_BY);
+        setIdentifier(Platform.IOS, "INVALID_EMAIL_BY", INVALID_EMAIL_ERROR_BY);
         println("Coming into SignUp Email Page.");
     }
 
@@ -46,23 +59,39 @@ public class SignUpEmailPage extends Vixlet<SignUpEmailPage> {
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("BACK_BY")));
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("ENTER_EMAIL_PROMPT_BY")));
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("USER_NAME_FIELD_BY")));
+        driverWait.until(ExpectedConditions.invisibilityOfElementLocated(getIdentifier("INVALID_EMAIL_BY")));
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("NEXT_BTN_BY")));
-        driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("ARROW_NEXT_BY")));
+        if ( ((String) driver.getCapabilities().getCapability("platformName")).equals("Android") ) {
+            driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("ARROW_NEXT_BY")));
+        } else {
+        	driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("EMAIL_BY")));
+        }
+
         return this;
     }
     
-    SignUpEmailPage fillSignUpEmail() {
+    SignUpEmailPage trySignUpEmailInvalid() {
+    	fillSignUpEmail("invalid.email_addr@gmail..com");
+        driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("INVALID_EMAIL_BY")));
+        return this;
+    }
+    
+    SignUpPWD_DOB setSignUpEmail() {
         int ri = new Random().nextInt(999989999);
-        String email = "frank.zhao+test" + ri + "@vixlet.com";	
-        WebElement emailElement = driver.findElement(getIdentifier("USER_NAME_FIELD_BY"));
-        emailElement.click();
-        emailElement.sendKeys(email);
-        return this;
+    	fillSignUpEmail("frank.zhao+test" + ri + "@vixlet.com");
+        return new SignUpPWD_DOB(driver, platform).waitUntilLoaded();
     }
     
-    SignUpPWD_DOB clickNext() {
+    void fillSignUpEmail(String email) {
+        WebElement emailElement = driver.findElement(getIdentifier("USER_NAME_FIELD_BY"));
+        emailElement.clear();
+        emailElement.sendKeys(email);
+        clickNext();
+    }
+    
+    SignUpEmailPage clickNext() {
     	driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("NEXT_BTN_BY"))).click();
-        return new SignUpPWD_DOB(driver, platform).waitUntilLoaded();
+    	return this;
     }
     
 }

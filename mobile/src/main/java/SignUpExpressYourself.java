@@ -18,7 +18,8 @@ public class SignUpExpressYourself extends Vixlet<SignUpExpressYourself> {
     private static final By TEXTINPUT_COUNTER_BY = By.id("com.vixlet.atp.debug:id/textinput_counter");
     private static final By NEXT_BTN_BY = By.id("com.vixlet.atp.debug:id/email_next_button");
     private static final By ARROW_NEXT_BY = By.id("com.vixlet.atp.debug:id/right_arrow");
-
+    private static final By UNAME_VALIDATE_BY = By.id("com.vixlet.atp.debug:id/username_validation");
+    
     
     public SignUpExpressYourself(AppiumDriver webDriver, Platform platform) {
         super(webDriver, platform);
@@ -28,6 +29,7 @@ public class SignUpExpressYourself extends Vixlet<SignUpExpressYourself> {
         setIdentifier(Platform.ANDROID, "TEXTINPUT_COUNTER_BY", TEXTINPUT_COUNTER_BY);
         setIdentifier(Platform.ANDROID, "NEXT_BTN_BY", NEXT_BTN_BY);
         setIdentifier(Platform.ANDROID, "ARROW_NEXT_BY", ARROW_NEXT_BY);
+        setIdentifier(Platform.ANDROID, "UNAME_VALIDATE_BY", UNAME_VALIDATE_BY);
         setIdentifier(Platform.IOS, "ARROW_NEXT_BY", ARROW_NEXT_BY);
         println("Coming into SignUp Express Yourself page.");
     }
@@ -38,24 +40,32 @@ public class SignUpExpressYourself extends Vixlet<SignUpExpressYourself> {
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("PAGE_ANNOTATION_BY")));
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("USER_NAME_BY")));
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("TEXTINPUT_COUNTER_BY")));
+        driverWait.until(ExpectedConditions.invisibilityOfElementLocated(getIdentifier("UNAME_VALIDATE_BY")));
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("NEXT_BTN_BY")));
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("ARROW_NEXT_BY")));
         return this;
     }
     
     SignUpExpressYourself setUserName() {
+        setUserName("dot.invalid @");
+        driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("UNAME_VALIDATE_BY")));
         int ri = new Random().nextInt(999989999);
-        String uname = "frank.zhao_test" + ri;	
-        WebElement emailElement = driver.findElement(getIdentifier("USER_NAME_BY"));
-        emailElement.click();
-        emailElement.sendKeys(uname);
+        setUserName(ri + "this_is_A_Really_Long_User_Name_which_goes_beyond_30_char_limit_"); //"frank_zhao_test"
+        pause(6);
         return this;
+//      return new SignUpPWD_DOB(driver, platform).waitUntilLoaded();
+    }
+    
+    void setUserName(String userName) {
+        WebElement emailElement = driver.findElement(getIdentifier("USER_NAME_BY"));
+        emailElement.clear();
+        emailElement.sendKeys(userName);
+        clickNext();
     }
     
     SignUpExpressYourself clickNext() {
     	driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("NEXT_BTN_BY"))).click();
     	return this;
-//        return new SignUpPWD_DOB(driver, platform).waitUntilLoaded();
     }
     
 }
