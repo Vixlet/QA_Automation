@@ -27,9 +27,10 @@ public class VixletWelcomePage extends Vixlet<VixletWelcomePage> {
     private static final By ENV_STAGING_ID_BY = By.id("Staging");
     private static final By ENV_STAGING_URI_BY = By.id("https://api-s.vixletinternal.com");
     private static final By LOGO_IMAGE_NAME_BY = By.id("SplashLogo");
-    private static final By ITEM_IMAGE_NAME_BY = By.id("splashPostIcon");
     private static final String xp = "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[";
-    private static final By ANNOTATION_XPATH_BY = By.xpath(xp + "1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeStaticText[2]");
+    private static final String xp2 = xp + "1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeStaticText[";
+    private static final By ITEM_IMAGE_NAME_BY = By.xpath(xp2 + "1]"); //By.id("splashPostIcon");
+    private static final By ANNOTATION_XPATH_BY = By.xpath(xp2 + "2]");
     private static final By INDICATOR_CONTAINER_XPATH_BY = By.xpath(xp + "2]/XCUIElementTypePageIndicator[1]");
     private static final By GET_STARTED_BY = By.id("Get Started");
 //    private static final By SIGN_IN_BY = By.id("Log in"); 

@@ -24,7 +24,7 @@ public class SignUpEmailPage extends Vixlet<SignUpEmailPage> {
     private static final By EMAIL_BY = By.id("Email");
     private static final By USERNAME_FIELD_BY = By.id("emailTextField");
     private static final By NEXT_BY = By.id("nextPage");
-    private static final By INVALID_EMAIL_ERROR_BY = By.id("Invalid Email");
+    private static final By INVALID_EMAIL_ERROR_BY = By.id("Please enter a valid email address");
 
     
     public SignUpEmailPage(AppiumDriver webDriver, Platform platform) {
@@ -71,14 +71,14 @@ public class SignUpEmailPage extends Vixlet<SignUpEmailPage> {
     }
     
     SignUpEmailPage trySignUpEmailInvalid() {
-    	fillSignUpEmail("invalid.email_addr@gmail..com");
+    	fillSignUpEmail("invalid.email_addr_vixlet..com");  //TODO: reverse to invalid.email_addr@vixlet..com upon fix of VIX-4167 (iOS)
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("INVALID_EMAIL_BY")));
         return this;
     }
     
     SignUpPWD_DOB setSignUpEmail() {
         int ri = new Random().nextInt(999989999);
-    	fillSignUpEmail("frank.zhao+test" + ri + "@vixlet.com");
+    	fillSignUpEmail("frank.vixlet+test" + ri + "@gmail.com");
         return new SignUpPWD_DOB(driver, platform).waitUntilLoaded();
     }
     

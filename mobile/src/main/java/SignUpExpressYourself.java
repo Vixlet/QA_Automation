@@ -19,6 +19,14 @@ public class SignUpExpressYourself extends Vixlet<SignUpExpressYourself> {
     private static final By NEXT_BTN_BY = By.id("com.vixlet.atp.debug:id/email_next_button");
     private static final By ARROW_NEXT_BY = By.id("com.vixlet.atp.debug:id/right_arrow");
     private static final By UNAME_VALIDATE_BY = By.id("com.vixlet.atp.debug:id/username_validation");
+    private static final By PROMPT_HEADER_BY = By.id("Express yourself");
+    private static final By PAGE_ANNOTATION_ID_BY = By.id("Create a username that represents you on MyATP");
+    private static final By USER_BY = By.id("Username");
+    private static final String xp1 = "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[2]/XCUIElementTypeScrollView[1]/";
+    private static final String xp = xp1 + "XCUIElementTypeOther[1]/XCUIElementTypeOther[4]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeScrollView[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[";
+    private static final By USER_ID_FIELD_BY = By.xpath(xp + "2]/XCUIElementTypeOther[1]/XCUIElementTypeTextField[1]");
+    private static final By CLEAR_TEXT_BY = By.xpath(xp + "2]/XCUIElementTypeOther[1]/XCUIElementTypeTextField[1]/XCUIElementTypeButton[1]"); //By.id("Clear text");
+    private static final By NEXT_PAGE_BY = By.xpath(xp + "3]/XCUIElementTypeOther[1]/XCUIElementTypeButton[1]"); //By.id("nextPage");
     
     
     public SignUpExpressYourself(AppiumDriver webDriver, Platform platform) {
@@ -29,8 +37,14 @@ public class SignUpExpressYourself extends Vixlet<SignUpExpressYourself> {
         setIdentifier(Platform.ANDROID, "TEXTINPUT_COUNTER_BY", TEXTINPUT_COUNTER_BY);
         setIdentifier(Platform.ANDROID, "NEXT_BTN_BY", NEXT_BTN_BY);
         setIdentifier(Platform.ANDROID, "ARROW_NEXT_BY", ARROW_NEXT_BY);
-        setIdentifier(Platform.ANDROID, "UNAME_VALIDATE_BY", UNAME_VALIDATE_BY);
-        setIdentifier(Platform.IOS, "ARROW_NEXT_BY", ARROW_NEXT_BY);
+//        setIdentifier(Platform.ANDROID, "UNAME_VALIDATE_BY", UNAME_VALIDATE_BY);
+        setIdentifier(Platform.IOS, "PAGE_PROMPT_BY", PROMPT_HEADER_BY);
+        setIdentifier(Platform.IOS, "PAGE_ANNOTATION_BY", PAGE_ANNOTATION_ID_BY);
+        setIdentifier(Platform.IOS, "USER_BY", USER_BY);
+        setIdentifier(Platform.IOS, "USER_NAME_BY", USER_ID_FIELD_BY);
+        setIdentifier(Platform.IOS, "CLEAR_TEXT_BY", CLEAR_TEXT_BY);
+        setIdentifier(Platform.IOS, "NEXT_BTN_BY", NEXT_PAGE_BY);
+        setIdentifier(Platform.IOS, "UNAME_VALIDATE_BY", UNAME_VALIDATE_BY);
         println("Coming into SignUp Express Yourself page.");
     }
 
@@ -39,16 +53,23 @@ public class SignUpExpressYourself extends Vixlet<SignUpExpressYourself> {
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("PAGE_PROMPT_BY")));
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("PAGE_ANNOTATION_BY")));
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("USER_NAME_BY")));
-        driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("TEXTINPUT_COUNTER_BY")));
         driverWait.until(ExpectedConditions.invisibilityOfElementLocated(getIdentifier("UNAME_VALIDATE_BY")));
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("NEXT_BTN_BY")));
-        driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("ARROW_NEXT_BY")));
+		if ( ((String) driver.getCapabilities().getCapability("platformName")).equals("Android") ) {
+	        driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("TEXTINPUT_COUNTER_BY")));
+	        driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("ARROW_NEXT_BY")));
+		} else {
+	        driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("USER_BY")));
+	        driverWait.until(ExpectedConditions.invisibilityOfElementLocated(getIdentifier("CLEAR_TEXT_BY")));
+		}
         return this;
     }
     
     SignUpExpressYourself setUserName() {
-        setUserName("dot.invalid @");
-        driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("UNAME_VALIDATE_BY")));
+		if ( ((String) driver.getCapabilities().getCapability("platformName")).equals("Android") ) {
+	        setUserName("dot.invalid @");
+	        driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("UNAME_VALIDATE_BY")));	
+		}
         int ri = new Random().nextInt(999989999);
         setUserName(ri + "this_is_A_Really_Long_User_Name_which_goes_beyond_30_char_limit_"); //"frank_zhao_test"
         pause(6);

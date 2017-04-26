@@ -14,32 +14,32 @@ public class VixletTest extends AppiumTest {
 
     @Category({SignUp.class}) 
     @Test
-    public void getStarted_Email() {
+    public void getStarted_EmailInvalid() {
         VixletWelcomePage wp = new VixletWelcomePage(driver, platform).waitUntilLoaded();
         wp.getStarted()
        .trySignUpEmailInvalid();
     }
 
-    @Category({SignUp.class, Android_only.class}) 
+    @Category({SignUp.class}) 
     @Test
     public void getStarted_PWD_DOB() {
         VixletWelcomePage wp = new VixletWelcomePage(driver, platform).waitUntilLoaded();
         wp.getStarted()
         .setSignUpEmail()
         .fillSignUpPWDOnly()
-        .setDOBJunior();
+        .setDOBminorVerify();
     }
 
-    @Category({SignUp.class, Android_only.class}) 
+    @Category({SignUp.class}) 
     @Test
-    public void getStarted_DOB() {
+    public void getStarted_DOB_minor() {
         VixletWelcomePage wp = new VixletWelcomePage(driver, platform).waitUntilLoaded();
         wp.getStarted()
         .setSignUpEmail()
         .setDOBOnly();
     }
     
-    @Category({SignUp.class, Android_only.class}) 
+    @Category({SignUp.class}) 
     @Test
     public void getStarted_UserName() {
         VixletWelcomePage wp = new VixletWelcomePage(driver, platform).waitUntilLoaded();
