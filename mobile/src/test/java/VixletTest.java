@@ -22,7 +22,7 @@ public class VixletTest extends AppiumTest {
 
     @Category({SignUp.class}) 
     @Test
-    public void getStarted_PWD_DOB() {
+    public void getStarted_PWD_DOB_minor() {
         VixletWelcomePage wp = new VixletWelcomePage(driver, platform).waitUntilLoaded();
         wp.getStarted()
         .setSignUpEmail()
@@ -32,13 +32,13 @@ public class VixletTest extends AppiumTest {
 
     @Category({SignUp.class}) 
     @Test
-    public void getStarted_DOB_minor() {
+    public void getStarted_DOBOnly() {
         VixletWelcomePage wp = new VixletWelcomePage(driver, platform).waitUntilLoaded();
         wp.getStarted()
         .setSignUpEmail()
         .setDOBOnly();
     }
-    
+	
     @Category({SignUp.class}) 
     @Test
     public void getStarted_UserName() {

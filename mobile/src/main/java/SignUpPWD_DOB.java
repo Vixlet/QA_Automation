@@ -1,14 +1,10 @@
-import io.appium.java_client.AppiumDriver;
-
 import java.util.HashMap;
-import java.util.Random;
 import java.util.TreeMap;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import io.appium.java_client.AppiumDriver;
 
 /**
  * Created by Jing Zhao on 4/24/17.
@@ -96,14 +92,6 @@ public class SignUpPWD_DOB extends Vixlet<SignUpPWD_DOB> {
         setIdentifier(Platform.IOS, "DOB_FIELD_BY", DOB_FIELD_XPATH_BY);
         setIdentifier(Platform.IOS, "TERM_PRIVACY_BY", TERM_PRIVACY_ID_BY);
         setIdentifier(Platform.IOS, "SIGNUP_BTN_BY", SIGNUP_BY);
-//        setIdentifier(Platform.IOS, "DOB_TITLE_BY", DOB_TITLE_BY);
-//        setIdentifier(Platform.IOS, "DOB_TITLE_DIVIDER_BY", DOB_TITLE_DIVIDER_BY);
-//        setIdentifier(Platform.IOS, "DOB_DAY_BY", DOB_DAY_BY);
-//        setIdentifier(Platform.IOS, "DOB_MONTH_BY", DOB_MONTH_BY);
-//        setIdentifier(Platform.IOS, "DOB_YEAR_BY", DOB_YEAR_BY);
-//        setIdentifier(Platform.IOS, "DOB_BTN_PANEL_BY", DOB_BTN_PANEL_BY);
-//        setIdentifier(Platform.IOS, "DOB_CANCEL_BY", DOB_CANCEL_BY);
-//        setIdentifier(Platform.IOS, "DOB_OK_BY", DOB_OK_BY);
         setIdentifier(Platform.IOS, "NAVIGATE_BACK_BY", HEADER_CLOSE_BY);
         setIdentifier(Platform.IOS, "TERMS_PAGE_HEADER_BY", TERMS_PAGE_HEADER_BY);
         setIdentifier(Platform.IOS, "NEED_DOB_PROMPT_BY", NEED_DOB_PROMPT_ID_BY);
@@ -270,17 +258,18 @@ public class SignUpPWD_DOB extends Vixlet<SignUpPWD_DOB> {
 	        driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("NAVIGATE_BACK_BY"))).click();
 	    	pause(2);
     	} else {
-//			JavascriptExecutor js = (JavascriptExecutor) driver;
-//			if (docName.equals("terms")) {
+			JavascriptExecutor js = (JavascriptExecutor) driver;
+			if (docName.equals("terms")) {
 //    			for(int i=0; i<4; i++) {
-//    		        driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("TERM_PRIVACY_BY"))).click();
-//    		        js.executeScript("mobile: tap", new HashMap<String, Double>() {{ put("tapCount", 2.0); put("touchCount", 2.0); put("duration", 0.5); put("x", 288.0); put("y", 352.0); }});
+//    		    	println("Tapping " + docName + " : " + i);
+//    		        js.executeScript("mobile: tap", new HashMap<String, Double>() {{ put("tapCount", 1.0); put("touchCount", 1.0); put("duration", 0.5); put("x", 291.0); put("y", 351.0); }});
 //        			pause(2);
 //    			}
-//			} else {
-//				js.executeScript("mobile: tap", new HashMap<String, Double>() {{ put("tapCount", 1.0); put("touchCount", 1.0); put("duration", 0.5); put("x", 151.0); put("y", 368.0); }});
-//    		}
-//	        driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("TERMS_PAGE_HEADER_BY"))).click();
+			} else {
+				js.executeScript("mobile: tap", new HashMap<String, Double>() {{ put("tapCount", 1.0); put("touchCount", 1.0); put("duration", 0.5); put("x", 151.0); put("y", 368.0); }});
+		        driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("TERMS_PAGE_HEADER_BY"))).click();
+    		}
+
     	}
     }
     

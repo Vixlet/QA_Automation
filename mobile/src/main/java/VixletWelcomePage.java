@@ -1,7 +1,6 @@
-import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import io.appium.java_client.AppiumDriver;
 
 /**
  * Created by Jing Zhao on 4/20/17.
@@ -80,7 +79,6 @@ public class VixletWelcomePage extends Vixlet<VixletWelcomePage> {
         	driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("ENV_PASSIVE_PROD_BY")));
         	driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("ENV_STAGING_BY"))).click();
         }
-//        dismissAndroidPopUp(1, getIdentifier("DISMISS_BY"), getIdentifier("DISMISS_BY"), "found Warning of 401 – \"Unauthorized\"}, dismissing");
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("LOGO_IMAGE_BY")));
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("ITEM_IMAGE_BY")));
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("ANNOTATION_BY")));

@@ -1,11 +1,7 @@
 import io.appium.java_client.AppiumDriver;
-
-import java.util.Random;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * Created by Jing Zhao on 4/21/17.
@@ -77,8 +73,7 @@ public class SignUpEmailPage extends Vixlet<SignUpEmailPage> {
     }
     
     SignUpPWD_DOB setSignUpEmail() {
-        int ri = new Random().nextInt(999989999);
-    	fillSignUpEmail("frank.vixlet+test" + ri + "@gmail.com");
+    	fillSignUpEmail("frank.vixlet+test" + System.currentTimeMillis() + "@gmail.com");  //epoch time in milliseconds
         return new SignUpPWD_DOB(driver, platform).waitUntilLoaded();
     }
     
