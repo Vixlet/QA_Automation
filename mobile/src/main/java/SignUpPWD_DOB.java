@@ -76,7 +76,7 @@ public class SignUpPWD_DOB extends Vixlet<SignUpPWD_DOB> {
 	private static final By NO_MINOR_QUALIFY_MSG_BY = By.id("Sorry you do not qualify to join MyATP. Please come back later.");
 	private static final By NO_MINOR_QUALIFY_OK_BY = By.id("OK");
 	private static final By HEADER_CLOSE_BY = By.id("headerButtonClose");
-	private static final By TERMS_PAGE_HEADER_BY = By.id("headerButtonClose");
+	private static final By TERMS_PRIVACY_HEADER_BY = By.id("Vixlet Community Guidelines");
 	
 	
 	
@@ -93,7 +93,7 @@ public class SignUpPWD_DOB extends Vixlet<SignUpPWD_DOB> {
         setIdentifier(Platform.IOS, "TERM_PRIVACY_BY", TERM_PRIVACY_ID_BY);
         setIdentifier(Platform.IOS, "SIGNUP_BTN_BY", SIGNUP_BY);
         setIdentifier(Platform.IOS, "NAVIGATE_BACK_BY", HEADER_CLOSE_BY);
-        setIdentifier(Platform.IOS, "TERMS_PAGE_HEADER_BY", TERMS_PAGE_HEADER_BY);
+        setIdentifier(Platform.IOS, "TERMS_PRIVACY_HEADER_BY", TERMS_PRIVACY_HEADER_BY);
         setIdentifier(Platform.IOS, "NEED_DOB_PROMPT_BY", NEED_DOB_PROMPT_ID_BY);
         setIdentifier(Platform.IOS, "NEED_PWD_PROMPT_BY", NEED_PWD_BY);
         setIdentifier(Platform.IOS, "MINOR_NOT_QUALIFY_PANEL_BY", NO_MINOR_QUALIFY_PANEL_BY);
@@ -252,25 +252,19 @@ public class SignUpPWD_DOB extends Vixlet<SignUpPWD_DOB> {
     			driver.tap(1, 450, 1079, 1000);
     		}
 	    	pause(6);
-	    	for(int i = 0; i<6; i++) {
-	    		scrollPageDown();
-	    	}
-	        driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("NAVIGATE_BACK_BY"))).click();
-	    	pause(2);
     	} else {
-			JavascriptExecutor js = (JavascriptExecutor) driver;
 			if (docName.equals("terms")) {
-//    			for(int i=0; i<4; i++) {
-//    		    	println("Tapping " + docName + " : " + i);
-//    		        js.executeScript("mobile: tap", new HashMap<String, Double>() {{ put("tapCount", 1.0); put("touchCount", 1.0); put("duration", 0.5); put("x", 291.0); put("y", 351.0); }});
-//        			pause(2);
-//    			}
+				driver.tap(1, 290, 372, 1000);
 			} else {
-				js.executeScript("mobile: tap", new HashMap<String, Double>() {{ put("tapCount", 1.0); put("touchCount", 1.0); put("duration", 0.5); put("x", 151.0); put("y", 368.0); }});
-		        driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("TERMS_PAGE_HEADER_BY"))).click();
+				driver.tap(1, 154, 386, 1000);
     		}
-
+	        driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("TERMS_PRIVACY_HEADER_BY")));
     	}
+    	for(int i=0; i<3; i++) {
+    		scrollPageDown();
+    	}
+        driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("NAVIGATE_BACK_BY"))).click();
+    	pause(2);
     }
     
     void scrollPageDown() {

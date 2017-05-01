@@ -108,7 +108,7 @@ public class AppiumTest {
             case ANDROID:
                 return new DriverProvider().getDriver("Android", "Galaxy_5s", "6.0.1", "/Applications/Vixlet/Android/ATP/parent-app-template-atp-debug.apk"); 
             case IOS:
-            	return new DriverProvider().getDriver("iOS", "iPhone 6", "10.3", "/Applications/Vixlet/iOS/ATP/ATPDEV.app"); //iPhone 6 Plus
+            	return new DriverProvider().getDriver("iOS", "iPhone 6 Plus", "10.3", "/Applications/Vixlet/iOS/ATP/ATPDEV.app"); 
             default:
                 return null;
         }

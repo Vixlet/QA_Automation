@@ -69,8 +69,10 @@ public class SignUpExpressYourself extends Vixlet<SignUpExpressYourself> {
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("UNAME_VALIDATE_BY")));
 		if ( ((String) driver.getCapabilities().getCapability("platformName")).equals("iOS") ) {
 	        driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("UNAME_VALIDATE_OK_BY"))).click();
-		} 
-        setUserName(System.currentTimeMillis() + "this_is_A_Really_Long_User_Name_which_goes_beyond_30_char_limit_"); //"frank_zhao_test"
+	        setUserName(System.currentTimeMillis() + "frank_zhao_test"); //TODO: sync with Android long-UID below upon fix of VIX-4236 (IOS)
+		} else {
+	        setUserName(System.currentTimeMillis() + "this_is_A_Really_Long_User_Name_which_goes_beyond_30_char_limit_");
+		}
         pause(6);
         return this;
 //      return new SignUpPWD_DOB(driver, platform).waitUntilLoaded();

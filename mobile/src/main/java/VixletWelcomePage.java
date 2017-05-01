@@ -1,4 +1,7 @@
+import java.util.HashMap;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import io.appium.java_client.AppiumDriver;
 
@@ -28,9 +31,10 @@ public class VixletWelcomePage extends Vixlet<VixletWelcomePage> {
     private static final By LOGO_IMAGE_NAME_BY = By.id("SplashLogo");
     private static final String xp = "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[";
     private static final String xp2 = xp + "1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeStaticText[";
-    private static final By ITEM_IMAGE_NAME_BY = By.xpath(xp2 + "1]"); //By.id("splashPostIcon");
-    private static final By ANNOTATION_XPATH_BY = By.xpath(xp2 + "2]");
-    private static final By INDICATOR_CONTAINER_XPATH_BY = By.xpath(xp + "2]/XCUIElementTypePageIndicator[1]");
+    private static final String xp93 = "//UIAApplication[1]/UIAWindow[1]/";
+    private static final By ITEM_IMAGE_XPATH_BY =  By.xpath(xp2 + "1]"); //By.xpath(xp93 + "UIAScrollView[1]/UIAStaticText[1]"); //By.id("splashPostIcon");
+    private static final By ANNOTATION_XPATH_BY = By.xpath(xp2 + "2]"); //By.xpath(xp93 + "UIAScrollView[1]/UIAStaticText[2]");
+    private static final By INDICATOR_CONTAINER_XPATH_BY = By.xpath(xp + "2]/XCUIElementTypePageIndicator[1]"); //By.xpath(xp93 + "UIAPageIndicator[1]");
     private static final By GET_STARTED_BY = By.id("Get Started");
 //    private static final By SIGN_IN_BY = By.id("Log in"); 
 
@@ -55,7 +59,7 @@ public class VixletWelcomePage extends Vixlet<VixletWelcomePage> {
         setIdentifier(Platform.IOS, "ENV_STAGING_BY", ENV_STAGING_ID_BY);
         setIdentifier(Platform.IOS, "ENV_STAGING_URI_BY", ENV_STAGING_URI_BY);
         setIdentifier(Platform.IOS, "LOGO_IMAGE_BY", LOGO_IMAGE_NAME_BY);
-        setIdentifier(Platform.IOS, "ITEM_IMAGE_BY", ITEM_IMAGE_NAME_BY);
+        setIdentifier(Platform.IOS, "ITEM_IMAGE_BY", ITEM_IMAGE_XPATH_BY);
         setIdentifier(Platform.IOS, "ANNOTATION_BY", ANNOTATION_XPATH_BY);
         setIdentifier(Platform.IOS, "INDICATOR_CONTAINER_BY", INDICATOR_CONTAINER_XPATH_BY);
         setIdentifier(Platform.IOS, "GET_STARTED_BY", GET_STARTED_BY);
@@ -64,10 +68,10 @@ public class VixletWelcomePage extends Vixlet<VixletWelcomePage> {
 
     public VixletWelcomePage waitUntilLoaded() {
         println("Waiting for expected elements to be loaded");
-    	pause(6);
+//    	pause(6);
         if ( ((String) driver.getCapabilities().getCapability("platformName")).equals("iOS") ) {
             driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("SETUP_TITLE_BY")));
-            driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("SERVERS_BY")));
+//            driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("SERVERS_BY")));
             driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("ENV_PROD_BY")));
             driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("ENV_PROD_URI_BY")));
             driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("ENV_STAGING_URI_BY")));
@@ -93,6 +97,16 @@ public class VixletWelcomePage extends Vixlet<VixletWelcomePage> {
     SignUpEmailPage getStarted() {
     	driverWait.until(ExpectedConditions.visibilityOfElementLocated(getIdentifier("GET_STARTED_BY"))).click();
         return new SignUpEmailPage(driver, platform).waitUntilLoaded();
+    }
+    
+    SignInEmailPage signIn() {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		println("Tapping log In");
+		js.executeScript("mobile: tap", new HashMap<String, Double>() {{ put("tapCount", 1.0); put("touchCount", 1.0); put("duration", 0.5); put("x", 280.0); put("y", 711.0); }});
+		pause(3);
+		driver.tap(1, 276, 709, 1000);
+		pause(6);
+        return new SignInEmailPage(driver, platform).waitUntilLoaded();
     }
     
 }
